@@ -19,7 +19,9 @@
                 <h2>List</h2>
                 <ul class="list-group">
                     <li v-for="(todo, index) in todos" :key="index" class="list-group-item">
-                        {{ index }}: {{ todo }}
+                        <input type="checkbox" name=""
+                        @change="changeEvent(index,todo.done)">
+                         <span :class="{done: todo.done}">{{ todo.text }}</span>
                       <div class="text-right">
                           <button class="btn btn-danger" @click="delete1(index)">
                             <i class="fa fa-trash"></i>
@@ -37,21 +39,34 @@
         name: "Todo",
         data () {
             return {
-                todos: [],
+                todos: [{text:'First one',done:false}],
                 input: ""
+
             }
         },
         methods: {
             add() {
-                this.todos.push(this.input);
+                this.todos.push({text: this.input, done: false});
                 this.input = "";
             },
             delete1(event) {
                 this.todos.splice(event, 1);
-            }
+            },
+            changeEvent(inx,value) {
+               this.todos[inx].done = !value;
+            },
+             bind: function(a){
+               // a.done = !a.done
+              // console.log(a.done)
+           },
+
         }
     }
 </script>
 <style>
+.done{
+    text-decoration-line: line-through;
+    color: gray;
+}
 
 </style>
